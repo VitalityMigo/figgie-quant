@@ -1,19 +1,15 @@
-const gameplay = {
-    suits_range: [8, 10, 10, 12],
-    suits_name: ['hearts', 'diamonds', 'clubs', 'spades'],
-}
-
 const data = {
     suits: 4,
-    prior: 1 / suits,
+    prior: 1 / 4,
     cards : 40,
     hand : 10,
     common : 12,
     uncommon : 10,
-    non_common : cards - common,
+    non_common : 40 - 12,
+    suits_range: [8, 10, 10, 12],
+    suits_name: ['hearts', 'diamonds', 'clubs', 'spades'],
 }
 
 module.exports = {
-    gameplay,
     data,
 }
