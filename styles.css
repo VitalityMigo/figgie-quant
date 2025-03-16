@@ -1,0 +1,266 @@
+/* Style unifié pour le body */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 370px;
+  height: auto;
+  max-height: 800px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reduced shadow for thinner border appearance */
+  background-color: white;
+}
+
+#container {
+  padding: 10px;
+}
+
+h3 {
+  margin: 10px 0;
+}
+
+/* Additional style for the input section heading */
+#input-section h3 {
+  margin-bottom: 11px; /* Original 10px + 1px extra padding */
+}
+
+.input-group {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5px;
+  width: 20%;
+}
+
+.input-group input {
+  width: 40px;
+  text-align: center;
+  padding: 5px;
+  margin-top: 2px; /* Reduced margin as we now have icons */
+  border: 1px solid #00000060; /* Thin explicit border */
+  border-radius: 3px; /* Smaller radius for sharper edges */
+}
+
+label {
+  display: inline-block;
+  width: 80px;
+}
+
+input {
+  width: 50px;
+}
+
+button {
+  display: block;
+  margin: 20px auto 10px;
+  padding: 5px 10px;
+  background-color: #6563b3;
+  color: white;
+  border: none;
+  border-radius: 2px; /* Smaller radius for sharper edges */
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4e4baa;
+  box-shadow: 0 1px 2px rgba(93, 66, 141, 0.1); /* Reduced shadow */
+}
+
+hr {
+  margin: 20px 0;
+}
+
+#results {
+  margin-bottom: 10px;
+}
+
+#banner {
+  background-color: #323080; /* Violet */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between Figgie logo and GitHub logo */
+  padding: 10px;
+  height: 40px;
+  border-bottom: 1px solid #202060; /* Thinner bottom border */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Reduced shadow for thinner appearance */
+}
+
+#banner img {
+  height: 25px; /* Adjusted logo size */
+  margin-right: 10px;
+}
+
+#banner h1 {
+  font-size: 20px;
+  margin: 0;
+}
+
+#github-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#github-logo {
+  width: 27px; /* Small and discreet size */
+  height: 30px;
+  margin-left: auto;
+  cursor: pointer;
+  filter: brightness(0) invert(1); /* Make the logo white to match the banner */
+  transition: opacity 0.3s ease;
+}
+
+#github-logo:hover {
+  opacity: 0.8; /* Slight hover effect */
+}
+
+/* Supprimez la classe .popup séparée pour éviter les conflits */
+/* La classe popup est maintenant appliquée directement au body */
+
+/* Rearranging input section to horizontal layout */
+#input-section {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Style for card suit icons */
+.suit-icon {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.suit-img {
+  width: 55px;
+  height: 55px;
+  margin-bottom: 1px;
+}
+
+/* Color for suit icons */
+#spades + .suit-icon img,
+#clubs + .suit-icon img {
+  filter: brightness(0); /* Make spades and clubs black */
+}
+
+#diamonds + .suit-icon img,
+#hearts + .suit-icon img {
+  filter: invert(15%) sepia(95%) saturate(6932%) hue-rotate(358deg) brightness(95%) contrast(112%); /* Make diamonds and hearts red */
+}
+
+/* Center the "Probabilities" heading */
+#output-section h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Adjust chart size and center it with margins */
+#chart {
+  display: block;
+  margin: 0 auto; /* Center the chart */
+  width: 90%; /* Take up most of the width with margins */
+  max-width: 320px; /* Ensure it doesn't exceed a reasonable size */
+  height: 180px; /* Slightly larger height */
+  padding-top: 10px; /* Add padding to ensure labels don't overlap the chart border */
+}
+
+/* Style for button container */
+#button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Add spacing between buttons */
+  margin-top: 15px;
+}
+
+#button-container button {
+  flex: 1; /* Ensure both buttons have the same size */
+  max-width: 150px; /* Optional: Limit button width */
+}
+
+/* Navigation bar styles */
+#nav-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center items vertically */
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+  padding: 3px 0; /* Reduced padding for a thinner bar */
+  border-bottom-left-radius: 8px; /* Rounded corners */
+  border-bottom-right-radius: 8px;
+  height: 30px; /* Reduced height by 25% */
+}
+
+.nav-btn {
+  background-color: transparent;
+  border: none;
+  padding: 2px 10px; /* Adjusted padding for smaller buttons */
+  font-size: 13px; /* Reduced font size */
+  cursor: pointer;
+  color: #323080;
+  font-weight: bold;
+  line-height: 20px; /* Adjusted to align text vertically */
+  position: relative; /* Allow positioning */
+  top: -5px; /* Slightly move the button text higher */
+}
+
+.nav-btn.active {
+  border-bottom: 2px solid #323080; /* Adjusted active underline */
+}
+
+/* Page visibility */
+.page {
+  display: none;
+}
+
+.nav-btn.active {
+  border-bottom: 2px solid #323080;
+}
+
+.nav-btn:hover {
+  opacity: 0.8;
+  border-bottom: 2px solid #323080;
+}
+
+.page:not(.hidden) {
+  display: block;
+}
+
+/* Note page styles */
+#note-page {
+  text-align: center;
+}
+
+#note-area {
+  width: 90%;
+  height: 150px;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  resize: none;
+}
+
+#clear-notes-btn {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#clear-notes-btn:hover {
+  background-color: #c9302c;
+}

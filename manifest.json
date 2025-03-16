@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Figgie Quant",
+  "version": "1.0",
+  "description": "Figgie quant trading copilot",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "assets/janestreet.png"
+  },
+  "permissions": []
+}

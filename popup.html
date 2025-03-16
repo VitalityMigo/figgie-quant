@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Figgie Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="banner">
+    <img src="assets/logo.png" alt="Figgie Logo">
+    <a href="https://github.com/VitalityMigo" target="_blank" id="github-link">
+      <img src="assets/github.png" alt="GitHub Logo" id="github-logo">
+    </a>
+  </div>
+  <div id="nav-bar">
+    <button id="hand-page-btn" class="nav-btn active">Hand</button>
+    <button id="note-page-btn" class="nav-btn">Notes</button>
+  </div>
+  <div id="container">
+    <!-- Hand Page -->
+    <div id="hand-page" class="page">
+      <div id="input-section">
+        <h3>Dealt Hand</h3>
+        <div class="input-container">
+          <div class="input-group">
+            <div class="suit-icon">
+              <img src="assets/spade.svg" alt="Spades" class="suit-img">
+            </div>
+            <input type="number" id="spades" min="0" max="12" value="0">
+          </div>
+          <div class="input-group">
+            <div class="suit-icon">
+              <img src="assets/club.svg" alt="Clubs" class="suit-img">
+            </div>
+            <input type="number" id="clubs" min="0" max="12" value="0">
+          </div>
+          <div class="input-group">
+            <div class="suit-icon">
+              <img src="assets/diamond.svg" alt="Diamonds" class="suit-img">
+            </div>
+            <input type="number" id="diamonds" min="0" max="12" value="0">
+          </div>
+          <div class="input-group">
+            <div class="suit-icon">
+              <img src="assets/heart.svg" alt="Hearts" class="suit-img">
+            </div>
+            <input type="number" id="hearts" min="0" max="12" value="0">
+          </div>
+        </div>
+        <div id="button-container">
+          <button id="compute-btn">Compute</button>
+          <button id="randomize-btn">Randomize</button>
+        </div>
+      </div>
+      <hr>
+      <div id="output-section">
+        <h3>Probabilities</h3>
+        <div id="results"></div>
+        <canvas id="chart" width="300" height="200"></canvas>
+      </div>
+    </div>
+
+    <!-- Note Page -->
+    <div id="note-page" class="page hidden">
+      <h3>Notes</h3>
+      <textarea id="note-area" placeholder="Write your notes here..."></textarea>
+      <button id="clear-notes-btn">Clear Notes</button>
+    </div>
+  </div>
+  <script src="dist/bundle.js"></script>
+</body>
+</html>
