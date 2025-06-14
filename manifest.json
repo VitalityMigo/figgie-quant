@@ -4,8 +4,15 @@
   "version": "1.0",
   "description": "Figgie quant trading copilot",
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": "assets/janestreet.png"
+    "default_popup": "frontend/popup.html",
+    "default_icon": "frontend/assets/janestreet.png"
   },
-  "permissions": []
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://www.figgie.com/play/"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.figgie.com/play/"],
+      "js": ["stream/inject.js"]
+    }
+  ]
 }

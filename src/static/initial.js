@@ -1,37 +1,36 @@
-//https://github.com/SeanAriel/Bayesian-Inference/blob/master/figgie/Figgie_Strategy.ipynb
-const math = require('mathjs');
-const data = require("../config.js").data;
-const { permuteUnique } = require("../math.js")
+import { data } from '../config.js';
+import { permuteUnique } from '../math.js';
+import * as math from 'mathjs'; // Import explicite de mathjs
 
-function compute_simple_ranges() {
-    const table = []
-    for (let i = 0; i <= data.hand; i++) {
+function compute_complex_range(hand) {
+    const table = [];
+    for (const [suit, i] of Object.entries(hand)) {
+        const other_dist = Object.values(hand).filter((value, index) => index !== Object.keys(hand).indexOf(suit));
 
-        // Non-observed cards in initial hand
-        const uncommon_cards = data.uncommon;
-        const remaining_hand = data.hand - i;
-
-        // Count total hand combinations
         const total_hands = math.combinations(data.cards, data.hand);
 
-        // Count total hand combinations with i observed cards in initial hand, if common, or uncommon
-        const ways_getI_common = math.combinations(data.common, i) * math.combinations(uncommon_cards, remaining_hand);
-        const ways_getI_ten = math.combinations(data.medium, i) * math.combinations(data.cards - data.medium, remaining_hand);
-        const ways_getI_eight = math.combinations(data.lower, i <= 8 ? i : 8) * math.combinations(data.cards - data.lower, i <= 8 ? remaining_hand : data.hand - 8);
+        const ways_getI_common = math.combinations(data.common, i);
+        const ways_get_others = permuteUnique([10, 10, 8]).reduce((sum, perm) => {
+            const comb = other_dist.map((k, idx) => perm[idx] >= k ? math.combinations(perm[idx], k) : 0);
+            return sum + (comb.some(c => c === 0) ? 0 : comb.reduce((a, b) => a * b, 1));
+        }, 0) / 3;
 
-        // Probability of getting i common cards in initial hand
-        const P_getI_of_common = ways_getI_common / total_hands;
-        const P_getI_of_ten = ways_getI_ten / total_hands;
-        const P_getI_of_eight = i <= 8 ? ways_getI_eight / total_hands : 0
+        const ways_getHand_ICommon = ways_getI_common * ways_get_others;
 
-        // Probability of getting i cards in initial hand
-        const P_getI = (P_getI_of_common * data.prior) + (P_getI_of_ten * 2 * data.prior) + (P_getI_of_eight * data.prior);
+        const suit_permutations = permuteUnique(data.suits_range);
+        const ways_getHand = suit_permutations.reduce((sum, perm) => {
+            const comb = [i, ...other_dist].map((k, idx) => perm[idx] >= k ? math.combinations(perm[idx], k) : 0);
+            return sum + (comb.some(c => c === 0) ? 0 : comb.reduce((a, b) => a * b, 1));
+        }, 0) / suit_permutations.length;
 
-        // Apply bayes rule
-        const bayesrule = (P_getI_of_common * data.prior) / P_getI;
+        const P_getHand_ICommon = ways_getHand_ICommon / total_hands;
+        const P_getHand = ways_getHand / total_hands;
 
-        table.push({ observed: i, probability: bayesrule })
+        const bayesrule = (P_getHand_ICommon * data.prior) / P_getHand;
+
+        table.push({ hand: suit, observation: i, probability: bayesrule });
     }
-
-    return table
+    return table;
 }
+
+export { compute_complex_range };

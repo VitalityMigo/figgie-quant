@@ -1,7 +1,7 @@
 import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js'; // Importer les composants nécessaires
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import * as math from 'mathjs';
-import main from './src/main.js';
+import initialHand from './src/main.js';
 
 // Enregistrer les composants nécessaires
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -24,7 +24,7 @@ document.getElementById('compute-btn').addEventListener('click', () => {
   }
 
   // Utilisation de la fonction main pour calculer les probabilités
-  const probabilities = main(spades, clubs, diamonds, hearts, math); // Passer math comme argument
+  const probabilities = initialHand(spades, clubs, diamonds, hearts, math); // Passer math comme argument
   displayResults(probabilities);
 });
 
@@ -39,7 +39,7 @@ document.getElementById('randomize-btn').addEventListener('click', () => {
   document.getElementById('hearts').value = randomNumbers[3];
 
   // Trigger compute with random values
-  const probabilities = main(
+  const probabilities = initialHand(
     randomNumbers[0],
     randomNumbers[1],
     randomNumbers[2],
@@ -162,21 +162,38 @@ document.getElementById('note-page-btn').addEventListener('click', () => {
   switchPage('note');
 });
 
+document.getElementById('chart-page-btn').addEventListener('click', () => {
+  switchPage('chart');
+});
+
 function switchPage(page) {
   const handPage = document.getElementById('hand-page');
+  const chartPage = document.getElementById('chart-page');
   const notePage = document.getElementById('note-page');
   const handBtn = document.getElementById('hand-page-btn');
+  const chartBtn = document.getElementById('chart-page-btn');
   const noteBtn = document.getElementById('note-page-btn');
 
   if (page === 'hand') {
     handPage.classList.remove('hidden');
+    chartPage.classList.add('hidden');
     notePage.classList.add('hidden');
     handBtn.classList.add('active');
+    chartBtn.classList.remove('active');
+    noteBtn.classList.remove('active');
+  } else if (page === 'chart') {
+    handPage.classList.add('hidden');
+    chartPage.classList.remove('hidden');
+    notePage.classList.add('hidden');
+    handBtn.classList.remove('active');
+    chartBtn.classList.add('active');
     noteBtn.classList.remove('active');
   } else if (page === 'note') {
     handPage.classList.add('hidden');
+    chartPage.classList.add('hidden');
     notePage.classList.remove('hidden');
     handBtn.classList.remove('active');
+    chartBtn.classList.remove('active');
     noteBtn.classList.add('active');
   }
 }
@@ -226,4 +243,40 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     localStorage.setItem('handInputs', JSON.stringify(inputs));
   });
+});
+
+// Mettre à jour l'état de la page Chart
+function updateChartStatus(isActive) {
+  console.log("HEHEHEHEHHEHEHEHEHEHEH!!!!!!!")
+  const statusBox = document.getElementById("game-status");
+  const transactionList = document.getElementById("transaction-list");
+
+  if (isActive) {
+    if (statusBox) statusBox.remove(); // Supprime la boîte de statut
+    transactionList.classList.remove("hidden"); // Affiche la liste des transactions
+  } else {
+    if (!document.getElementById("game-status")) {
+      // Récrée la boîte de statut si elle a été supprimée
+      const newStatusBox = document.createElement("div");
+      newStatusBox.id = "game-status";
+      newStatusBox.className = "status-box";
+      newStatusBox.textContent = "The trading pit is currently closed";
+      transactionList.parentNode.insertBefore(newStatusBox, transactionList);
+    }
+    transactionList.classList.add("hidden"); // Masque la liste des transactions
+  }
+}
+
+// Ajouter une transaction à la liste
+function updateTransactions(transaction) {
+  const transactionList = document.getElementById("transactions");
+  const listItem = document.createElement("li");
+  listItem.textContent = `Suite: ${transaction.suite}, Price: ${transaction.price}`;
+  transactionList.appendChild(listItem);
+}
+
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.type === "GAME_STATUS") {
+    updateChartStatus(message.isActive)
+  }
 });
